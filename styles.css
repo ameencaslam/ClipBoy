@@ -1,0 +1,169 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Consolas", "Courier New", "Monaco", "Menlo", monospace;
+  background: transparent;
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-feature-settings: "liga" 0;
+}
+
+.overlay-container {
+  width: 300px;
+  max-height: 400px;
+  background: #000000;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+  border: 1px solid #ffffff;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  background: #000000;
+  border-bottom: 1px solid #ffffff;
+  cursor: move;
+  -webkit-app-region: drag;
+}
+
+.title {
+  font-size: 13px;
+  font-weight: 500;
+  color: #ffffff;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.close-btn {
+  background: transparent;
+  border: none;
+  color: #ffffff;
+  font-size: 18px;
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  -webkit-app-region: no-drag;
+  transition: background 0.15s;
+  line-height: 1;
+}
+
+.close-btn:hover {
+  background: #ffffff;
+  color: #000000;
+}
+
+.clipboard-items {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.clipboard-item {
+  background: #000000;
+  border-bottom: 1px solid #ffffff;
+  padding: 12px 16px;
+  padding-right: 40px;
+  cursor: grab;
+  transition: background 0.15s;
+  word-wrap: break-word;
+  font-size: 12px;
+  color: #ffffff;
+  line-height: 1.5;
+  max-height: 80px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  position: relative;
+}
+
+.delete-btn {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  color: #ffffff;
+  font-size: 14px;
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s;
+  line-height: 1;
+  -webkit-app-region: no-drag;
+}
+
+.clipboard-item:hover .delete-btn {
+  display: flex;
+}
+
+.delete-btn:hover {
+  background: #ffffff;
+  color: #000000;
+}
+
+.clipboard-item:last-child {
+  border-bottom: none;
+}
+
+.clipboard-item:hover {
+  background: #ffffff;
+  color: #000000;
+}
+
+.clipboard-item:active {
+  cursor: grabbing;
+}
+
+.clipboard-item.dragging {
+  opacity: 0.5;
+  cursor: grabbing;
+}
+
+.clipboard-item.empty {
+  color: #888888;
+  font-style: italic;
+  text-align: center;
+  padding: 40px 20px;
+  cursor: default;
+  border-bottom: none;
+}
+
+.clipboard-item.empty:hover {
+  background: #000000;
+  color: #888888;
+}
+
+/* Scrollbar styling */
+.clipboard-items::-webkit-scrollbar {
+  width: 4px;
+}
+
+.clipboard-items::-webkit-scrollbar-track {
+  background: #000000;
+}
+
+.clipboard-items::-webkit-scrollbar-thumb {
+  background: #ffffff;
+}
+
+.clipboard-items::-webkit-scrollbar-thumb:hover {
+  background: #ffffff;
+}
