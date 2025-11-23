@@ -44,6 +44,11 @@ function createOverlayWindow() {
   overlayWindow.on("blur", () => {
     // Optional: hide on blur or keep visible
   });
+
+  // Notify renderer when window is shown to trigger opening animation
+  overlayWindow.on("show", () => {
+    overlayWindow.webContents.send("window-showing");
+  });
 }
 
 // Handle window dragging

@@ -7,6 +7,26 @@ let draggedElement = null;
 clipboardHistory = ipcRenderer.sendSync("get-clipboard-history");
 renderClipboardItems();
 
+// Trigger opening animation when window is shown
+window.addEventListener("DOMContentLoaded", () => {
+  const container = document.querySelector(".overlay-container");
+  if (container) {
+    container.classList.remove("closing");
+    // Force reflow to restart animation
+    void container.offsetWidth;
+  }
+});
+
+// Listen for window show events to restart opening animation
+ipcRenderer.on("window-showing", () => {
+  const container = document.querySelector(".overlay-container");
+  if (container) {
+    container.classList.remove("closing");
+    // Force reflow to restart animation
+    void container.offsetWidth;
+  }
+});
+
 // Listen for clipboard updates
 ipcRenderer.on("clipboard-updated", (event, history) => {
   clipboardHistory = history;
@@ -50,6 +70,12 @@ function renderClipboardItems() {
         if (!e.target.classList.contains("delete-btn")) {
           const text = item.getAttribute("data-text");
           ipcRenderer.send("copy-to-clipboard", text);
+          
+          // Add copy animation
+          item.classList.add("copied");
+          setTimeout(() => {
+            item.classList.remove("copied");
+          }, 400);
         }
       });
       
@@ -114,7 +140,16 @@ function setupDragAndDrop(element) {
 
 // Close button handler
 document.getElementById("closeBtn").addEventListener("click", () => {
-  ipcRenderer.send("close-overlay");
+  const container = document.querySelector(".overlay-container");
+  if (container) {
+    container.classList.add("closing");
+    // Wait for closing animation to complete before quitting
+    setTimeout(() => {
+      ipcRenderer.send("close-overlay");
+    }, 300);
+  } else {
+    ipcRenderer.send("close-overlay");
+  }
 });
 
 // Escape HTML to prevent XSS

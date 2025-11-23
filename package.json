@@ -16,7 +16,8 @@
     "appId": "com.clipboy.app",
     "productName": "ClipBoy",
     "win": {
-      "target": "portable"
+      "target": "portable",
+      "icon": "build/icon.ico"
     },
     "files": [
       "**/*",
