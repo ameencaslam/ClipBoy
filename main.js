@@ -36,10 +36,9 @@ function createOverlayWindow() {
   // Disable forward for better drag-and-drop support
   overlayWindow.setIgnoreMouseEvents(false, { forward: false });
 
-  // Prevent window from being closed
+  // Quit app when window is closed
   overlayWindow.on("close", (event) => {
-    event.preventDefault();
-    overlayWindow.hide();
+    app.quit();
   });
 
   overlayWindow.on("blur", () => {
@@ -124,9 +123,8 @@ ipcMain.on("copy-to-clipboard", (event, text) => {
 });
 
 ipcMain.on("close-overlay", () => {
-  if (overlayWindow) {
-    overlayWindow.hide();
-  }
+  // Quit app when close button is clicked
+  app.quit();
 });
 
 ipcMain.on("delete-clipboard-item", (event, index) => {
